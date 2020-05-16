@@ -8,18 +8,18 @@ main {
     flex-wrap:wrap;
 }
 section {
-    width:600px;
+    width:750px;
 }
 #jeuCartes,#cartesDecouvertes {
-    width: 600px;
+    width: 750px;
     display: flex;
     flex-wrap: wrap;
 }
 
 /*Retournement des cartes : principe du flip  */
 .flip {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     position:relative;
     transition: all 1s ease;
     transform-style: preserve-3d;
@@ -37,6 +37,8 @@ section {
     box-shadow: 0 0 5px black;
     display:block;
     backface-visibility: hidden;
+    height: 120px;
+    width: 120px;
  }
 
 .flip img:first-child {
@@ -65,7 +67,7 @@ section {
     height:300px;
     font-size:36px;
 }
-.myButton {
+/*.myButton {
 	-moz-box-shadow: 3px 4px 0px 0px #899599;
 	-webkit-box-shadow: 3px 4px 0px 0px #899599;
 	box-shadow: 3px 4px 0px 0px #899599;
@@ -104,4 +106,4 @@ section {
 .myButton:active {
 	position:relative;
 	top:1px;
-}
+}*/

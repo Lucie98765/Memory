@@ -21,6 +21,35 @@ function initialiser(evt){
     for (var uneCarte of lesCartes){
         uneCarte.addEventListener("click", retournerCarte);
     }
+    
+    /* ALEATOIRE A CHANGER ICI */
+    /* CHOIX DU DECK AFFICHE */
+    const alea_deck = Math.random();
+    if(alea_deck<1/4){
+        change_deck(1);
+    } else if (1/4<=alea_deck && alea_deck < 2/4){
+        change_deck(2);
+    } else if (2/4<=alea_deck && alea_deck< 3/4){
+        change_deck(3);
+    } else {
+        change_deck(4);
+    }
+}
+
+function change_deck(evt){
+    console.log(evt);
+    var lesCartes = document.querySelectorAll("img");
+    for (var uneCarte of lesCartes){
+        const previous_src = uneCarte.src;
+        const pos = previous_src.indexOf("u");
+        uneCarte.src = previous_src.substr(0, pos+1)+evt+previous_src.substr(pos+2);
+    }
+}
+
+function nb_cartes(evt){
+    if (evt == 1){
+        //Nombres cartes niveau facile
+    }
 }
 
 function retournerCarte(evt){
@@ -69,11 +98,8 @@ function clonerCartes(evt){
     carte1=null;
     carte2=null;
     window.removeEventListener("click",stop,true);
-    if(document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length==16){ //remettre à 16
-        var son= new Audio("/sons/applaudissement.mp3");
-        son.play();
-        window.alert("Vous avez gagné en "+compte+" coups"),
-        son.addEventListener("ended", afficherBouton);
+    if(document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length==24){ //remettre à 16
+        window.alert("Vous avez gagné en "+compte+" coups");
     }
 }
 
