@@ -5,22 +5,14 @@ var carte1;
 var carte2;
 var carte1clonee;
 var carte2clonee;
-var compte;
+var compte = null;
+
+let niveau = null;
+let nb_cartes = 0;
+//let alea_nb_cartes = 0;
 
 function initialiser(evt){
-    var lesCartes = document.getElementsByClassName("flip");
-    compte=null;
-    //Melanger les cartes
-    for (var compteur=null; compteur<=50; compteur++){
-        var taille = lesCartes.length-1;
-        var alea = Math.round(Math.random()*taille);
-        var carteAlea=lesCartes[alea];
-        var section = document.getElementById("jeuCartes");
-        section.appendChild(carteAlea);
-    }
-    for (var uneCarte of lesCartes){
-        uneCarte.addEventListener("click", retournerCarte);
-    }
+    init_jeu();
     
     /* ALEATOIRE A CHANGER ICI */
     /* CHOIX DU DECK AFFICHE */
@@ -36,8 +28,80 @@ function initialiser(evt){
     }
 }
 
+function init_jeu(){
+    const section_niveau = document.getElementById("section_niveau");
+    const section_jeu = document.getElementById("section_jeu");
+    section_jeu.style.display = "none";
+    document.getElementById("niveau_facile").addEventListener("click", function(){
+        def_niveau("facile")
+    });
+    
+    document.getElementById("niveau_moyen").addEventListener("click", function(){
+        def_niveau("moyen")
+    });
+    
+    document.getElementById("niveau_difficile").addEventListener("click", function(){
+        def_niveau("difficile")
+    });
+}
+
+function def_niveau(evt){
+    niveau = evt;
+    section_niveau.style.display = "none";
+    section_jeu.style.display = "block";
+    maj_nb_cartes();
+    def_temps_jeu();
+}
+
+/* ALEATOIRE A CHANGER ICI */
+/* DETERMINE LE NOMBRE DE CARTES */
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+function maj_nb_cartes(){
+    let alea_nb_cartes = 0;
+    if (niveau == "facile"){
+        alea_nb_cartes = getRandomInt(3);
+        nb_cartes = 8 + alea_nb_cartes;
+    } else if (niveau == "moyen"){
+        alea_nb_cartes = getRandomInt(3);
+        nb_cartes = 9 + alea_nb_cartes;
+    } else if (niveau == "difficile"){
+        alea_nb_cartes = getRandomInt(3);
+        nb_cartes = 10 + alea_nb_cartes;
+    }  
+    console.log("nb cartes : " + nb_cartes);
+    lancer_jeu();
+}
+
+function lancer_jeu(){
+    const a_suppr = (2*(12 - nb_cartes));
+    console.log("a suppr : "+a_suppr);
+    for(let i = 0; i < 2*a_suppr; i++){
+        var section = document.getElementById("jeuCartes");
+        //console.log(section.lastChild);
+        section.removeChild(section.lastChild);
+    }
+    var lesCartes = document.getElementsByClassName("flip");
+    //Melanger les cartes
+    var section = document.getElementById("jeuCartes");
+    for (var compteur=null; compteur<=100; compteur++){
+        var taille = lesCartes.length;
+        console.log("taille : "+taille);
+        /* ALEATOIRE A CHANGER ICI */
+        /* PLACEMENT DES CARTES */
+        var alea = Math.round(Math.random()*(taille-1));
+        var carteAlea=lesCartes[alea];
+        section.appendChild(carteAlea);
+    }
+    for (var uneCarte of lesCartes){
+        uneCarte.addEventListener("click", retournerCarte);
+    }
+}
+
 function change_deck(evt){
-    console.log(evt);
+    console.log("Deck numéro " + evt);
     var lesCartes = document.querySelectorAll("img");
     for (var uneCarte of lesCartes){
         const previous_src = uneCarte.src;
@@ -46,10 +110,10 @@ function change_deck(evt){
     }
 }
 
-function nb_cartes(evt){
-    if (evt == 1){
-        //Nombres cartes niveau facile
-    }
+/* ALEATOIRE A CHANGER ICI */
+/* DEFINITION DU TEMPS LIMITE */
+function def_temps_jeu(){
+    
 }
 
 function retournerCarte(evt){
@@ -98,8 +162,9 @@ function clonerCartes(evt){
     carte1=null;
     carte2=null;
     window.removeEventListener("click",stop,true);
-    if(document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length==24){ //remettre à 16
+    if(document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length==nb_cartes*2){ //remettre à 16
         window.alert("Vous avez gagné en "+compte+" coups");
+        afficherBouton();
     }
 }
 
@@ -107,7 +172,7 @@ function stop(evt){
     evt.stopPropagation();
 }
 
-function afficherBouton(evt){
+function afficherBouton(){
     var bouton = document.getElementById("divRejouer");
     bouton.style.display="flex";
     bouton.addEventListener("click", rejouer);
