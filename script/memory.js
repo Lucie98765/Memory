@@ -13,6 +13,18 @@ let temps_jeu = 0;
 let premier_click = true;
 let interval1
 
+let message_gagnant_1 = "Félicitations ! Tu as une mémoire d'éléphant ";
+let message_gagnant_2 = "Bon, tu as gagné, mais ce n'était pas si difficile, n'exagère pas...";
+let message_gagnant_3 = "Et c'est gagné ! ";
+let message_gagnant_4 = "Pas mal ! Et si tu rejouais pour améliorer ton score ? ";
+let message_gagnant_5 = "Wow ! Mais c'est une victoire ! ";
+
+let message_perdant_1 = "Flûte, c'est loupé...";
+let message_perdant_2 = "Et c'est perdu ! Tu feras mieux la prochaine fois";
+let message_perdant_3 = "Perdu ! Réessaye pour voir ?";
+let message_perdant_4 = "Je me doutais bien que ça serait trop dur pour toi...";
+let message_perdant_5 = "Dommage, perdu ! ";
+
 function initialiser(evt){
     init_jeu();
     
@@ -145,7 +157,17 @@ function lancer_timer(){
         temps_restant--;
         if(temps_restant == 0){
             window.removeEventListener("click",stop,true);
-            window.alert("Le temps est écoulé, vous avez perdu !");
+            /* ALEATOIRE A CHANGER ICI */
+            /* MESSAGE DE DEFAITE ALEATOIRE */
+            let alea_msg = Math.random();
+            console.log("alea defaite"+ alea_msg);
+            let message = "";
+            if (alea_msg < 1/5) message = message_perdant_1;
+            else if (alea_msg >= 1/5 && alea_msg < 2/5) message = message_perdant_2;
+            else if (alea_msg >= 2/5 && alea_msg < 3/5) message = message_perdant_3;
+            else if (alea_msg >= 3/5 && alea_msg < 4/5) message = message_perdant_4;
+            else message = message_perdant_5;
+            window.alert(message);
             clearInterval(interval1);
             afficherBouton();
         }
@@ -210,7 +232,16 @@ function clonerCartes(evt){
     if(document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length==nb_cartes*2){ 
         clearInterval(interval1);
         window.removeEventListener("click",stop,true);
-        window.alert("Vous avez gagné en "+compte+" coups");
+        /* ALEATOIRE A CHANGER ICI */
+        /* MESSAGE DE VICTOIRE ALEATOIRE */
+        let alea_msg = Math.random();
+        console.log("alea victoire"+ alea_msg);
+        let message = "";
+        if (alea_msg < 1/5) message = message_gagnant_1;
+        else if (alea_msg >= 1/5 && alea_msg < 2/5) message = message_gagnant_2;
+        else if (alea_msg >= 2/5 && alea_msg < 3/5) message = message_gagnant_3;
+        else if (alea_msg >= 3/5 && alea_msg < 4/5) message = message_gagnant_4;
+        else message = message_gagnant_5;
         afficherBouton();
     }
 }
