@@ -1,5 +1,4 @@
 "use strict";
-
 document.addEventListener("DOMContentLoaded", initialiser);
 var carte1;
 var carte2;
