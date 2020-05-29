@@ -24,24 +24,34 @@ let message_perdant_3 = "Perdu ! Réessaye pour voir ?";
 let message_perdant_4 = "Je me doutais bien que ça serait trop dur pour toi...";
 let message_perdant_5 = "Dommage, perdu ! ";
 
-function initialiser(evt){
-    init_jeu();
-    
-    /* ALEATOIRE A CHANGER ICI */
-    /* CHOIX DU DECK AFFICHE */
-    const alea_deck = Math.random();
-    if(alea_deck<1/4){
-        change_deck(1);
-    } else if (1/4<=alea_deck && alea_deck < 2/4){
-        change_deck(2);
-    } else if (2/4<=alea_deck && alea_deck< 3/4){
-        change_deck(3);
-    } else {
-        change_deck(4);
+let deckChoice = [1,2,3,4];
+
+let probaDeck = [loiBinomiale(0,4,0.25),loiBinomiale(1,4,0.25),loiBinomiale(2,4,0.25),loiBinomiale(3,4,0.25)]
+console.log(loiBinomiale(0,4,0.25)+loiBinomiale(1,4,0.25)+loiBinomiale(2,4,0.25)+loiBinomiale(3,4,0.25))
+
+/* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK */
+function indiceDeck(probaDeck){
+    const t = Math.random();
+    let sumProba = 0
+    let eventPositionInArray = 0
+    let p = probaDeck
+    for (let i=0; i< p.length ; i++){
+        if ( sumProba <= t){
+            sumProba += p[i]
+            eventPositionInArray ++              
+        }
+    }
+    if (eventPositionInArray == p.length)
+        return eventPositionInArray-1
+    else{
+        return eventPositionInArray
     }
 }
 
-
+function initialiser(evt){
+    init_jeu();
+    change_deck(deckChoice[indiceDeck(probaDeck)]);
+}
 
 function change_deck(evt){
     console.log("Deck numéro " + evt);

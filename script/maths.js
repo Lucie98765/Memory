@@ -18,5 +18,3 @@ function factorielle(n){
 function coeffBinomial(n,k){
 	return factorielle(n)/(factorielle(k)*factorielle(n-k));
 }
-
-console.log(loiBinomiale(1,6,0.3));
