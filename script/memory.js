@@ -1,5 +1,6 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", initialiser);
+let deckFinal;
 let carte1;
 let carte2;
 let carte1clonee;
@@ -12,17 +13,15 @@ let temps_jeu = 0;
 let premier_click = true;
 let interval1
 
-let message_gagnant_1 = "Félicitations ! Tu as une mémoire d'éléphant ";
-let message_gagnant_2 = "Bon, tu as gagné, mais ce n'était pas si difficile, n'exagère pas...";
-let message_gagnant_3 = "Et c'est gagné ! ";
-let message_gagnant_4 = "Pas mal ! Et si tu rejouais pour améliorer ton score ? ";
-let message_gagnant_5 = "Wow ! Mais c'est une victoire ! ";
+let message_gagnant_1 = "Tu as gagné ! Tu étais la voyante de cette partie on dirait";
+let message_gagnant_2 = "Gagné ! On t'offre le laurier de la victoire";
+let message_gagnant_3 = "Et c'est gagné ! C'était écrit dans les étoiles";
+let message_gagnant_4 = "Bravo ! Quel.le artiste !";
 
-let message_perdant_1 = "Flûte, c'est loupé...";
-let message_perdant_2 = "Et c'est perdu ! Tu feras mieux la prochaine fois";
-let message_perdant_3 = "Perdu ! Réessaye pour voir ?";
-let message_perdant_4 = "Je me doutais bien que ça serait trop dur pour toi...";
-let message_perdant_5 = "Dommage, perdu ! ";
+let message_perdant_1 = "Perdu... Les loups ont eu raison de toi";
+let message_perdant_2 = "Dommage, perdu. Voici une couronne de chardons pour te réconforter";
+let message_perdant_3 = "Loupé, les astres n'étaient pas de ton côté on dirait";
+let message_perdant_4 = "Perdu, ce n'est pas un très beau tableau que tu nous a peint ici...";
 
 let deckChoice = [1, 2, 3, 4];
 
@@ -62,6 +61,7 @@ function change_deck(evt) {
         const pos = previous_src.indexOf("u");
         uneCarte.src = previous_src.substr(0, pos + 1) + evt + previous_src.substr(pos + 2);
     }
+    deckFinal = evt;
 }
 
 
@@ -138,9 +138,7 @@ function lancer_jeu() {
 
     //Melanger les cartes
     let section = document.getElementById("jeuCartes");
-    for (let compteur = null; compteur <= 200; compteur++) {
-        /* PLACEMENT DES CARTES */
-        
+    for (let compteur = null; compteur <= 200; compteur++) {        
         for (let i = 0; i < probaPlacement.length; i++) {
             let nb = probaPlacement[i]+i; //on rajoute i pour varier au fur et à mesure de la boucle
             nb = nb%10;
@@ -155,13 +153,6 @@ function lancer_jeu() {
     def_temps_jeu();
 }
 
-
-
-
-
-
-/* ALEATOIRE A CHANGER ICI */
-/* DEFINITION DU TEMPS LIMITE */
 function def_temps_jeu() {
     if (niveau == "facile") {
         temps_jeu = 75 + getRandomInt(60); //Entre 75 et 120 sec
@@ -181,16 +172,9 @@ function lancer_timer() {
         temps_restant--;
         if (temps_restant == 0) {
             window.removeEventListener("click", stop, true);
-            /* ALEATOIRE A CHANGER ICI */
-            /* MESSAGE DE DEFAITE ALEATOIRE */
-            let alea_msg = Math.random();
-            console.log("alea defaite" + alea_msg);
-            let message = "";
-            if (alea_msg < 1 / 5) message = message_perdant_1;
-            else if (alea_msg >= 1 / 5 && alea_msg < 2 / 5) message = message_perdant_2;
-            else if (alea_msg >= 2 / 5 && alea_msg < 3 / 5) message = message_perdant_3;
-            else if (alea_msg >= 3 / 5 && alea_msg < 4 / 5) message = message_perdant_4;
-            else message = message_perdant_5;
+            const listeMessages = [message_perdant_1, message_perdant_2, message_perdant_3, message_perdant_4];
+            const message = loiNonNumerique(listeMessages, deckFinal);
+            console.log(message);
             window.alert(message);
             clearInterval(interval1);
             afficherBouton();
@@ -198,9 +182,6 @@ function lancer_timer() {
     }, 1000);
 
 }
-
-
-
 
 
 function retournerCarte(evt) {
@@ -211,7 +192,6 @@ function retournerCarte(evt) {
         lancer_timer();
         premier_click = false;
     }
-    //console.log("message");/*=system.out.printl*/
     if (carte1 == null) {
         carte1 = uneCarte;
     } else {
@@ -255,17 +235,9 @@ function clonerCartes(evt) {
     window.removeEventListener("click", stop, true);
     if (document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length == nb_cartes * 2) {
         clearInterval(interval1);
-        window.removeEventListener("click", stop, true);
-        /* ALEATOIRE A CHANGER ICI */
-        /* MESSAGE DE VICTOIRE ALEATOIRE */
-        let alea_msg = Math.random();
-        console.log("alea victoire" + alea_msg);
-        let message = "";
-        if (alea_msg < 1 / 5) message = message_gagnant_1;
-        else if (alea_msg >= 1 / 5 && alea_msg < 2 / 5) message = message_gagnant_2;
-        else if (alea_msg >= 2 / 5 && alea_msg < 3 / 5) message = message_gagnant_3;
-        else if (alea_msg >= 3 / 5 && alea_msg < 4 / 5) message = message_gagnant_4;
-        else message = message_gagnant_5;
+        window.removeEventListener("click", stop, true); 
+        const listeMessages = [message_gagnant_1, message_gagnant_2, message_gagnant_3, message_gagnant_4];
+        const message = loiNonNumerique(listeMessages, deckFinal);
         window.alert(message);
         afficherBouton();
     }

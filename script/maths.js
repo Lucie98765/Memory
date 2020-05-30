@@ -26,27 +26,46 @@ function loiGeometrique(p){
         x=x+1;
         U=Math.random(); 
     }
-    return x
-    
+    return x 
 }
 
-/*function loiMultinomiale(n, p){
-    // n : nombre de fois que la simulation est lancée
-    // p : le tableau des probabilités ? 
-    let result;
-    let nFacto = factorielle(n);
-    let denom = 1;
-    for(let i = 0; i< p.length; i++){
-        denom = denom * factorielle(i);
-    }
-    let multi = 1;
-    for(let i = 0; i< p.length; i++){
-        multi = multi * Math.pow(p[i], i);
-    }
-    
-    result = (nFacto/denom)*multi;
-    return result;
-     
-}*/
-
+function loiNonNumerique(messages, deck){
+    //messages : tableau de messages
+    //deck : le deck qui a été choisi
+    const alea = Math.random();
+    console.log("alea message : "+alea)
+    if(deck == 1 && alea <= 0.7){ //Deck 1 
+        return messages[0];
+    } else if (deck == 1 && alea > 0.7 && alea <= 0.8){
+        return messages[1];
+    } else if (deck == 1 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 1 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 2 && alea <= 0.7){ //Deck 2
+        return messages[1];
+    } else if (deck == 2 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 2 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 2 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 3 && alea <= 0.7){ //Deck 3
+        return messages[2];
+    } else if (deck == 3 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 3 && alea > 0.8 && alea <= 0.9){
+        return messages[1];
+    } else if (deck == 3 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 4 && alea <= 0.7){ //Deck 4
+        return messages[3];
+    } else if (deck == 2 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 2 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 2 && alea > 0.9){
+        return messages[1];
+    } 
+}
 
