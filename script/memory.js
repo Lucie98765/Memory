@@ -25,25 +25,27 @@ let message_perdant_4 = "Perdu, ce n'est pas un très beau tableau que tu nous a
 
 let deckChoice = [1, 2, 3, 4];
 
-let probaDeck = [loiBinomiale(0, 4, 0.25), loiBinomiale(1, 4, 0.25), loiBinomiale(2, 4, 0.25), loiBinomiale(3, 4, 0.25)]
-console.log(loiBinomiale(0, 4, 0.25) + loiBinomiale(1, 4, 0.25) + loiBinomiale(2, 4, 0.25) + loiBinomiale(3, 4, 0.25))
-console.log(probaDeck);
 
-/* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK */
-function indiceDeck(probaDeck) {
-    const t = Math.random(); //nb entre 0 et 1
-    let sumProba = 0
+let probaDeck = [loiBinomiale(0,3,0.25),loiBinomiale(1,3,0.25),loiBinomiale(2,3,0.25),loiBinomiale(3,3,0.25)]
+console.log(loiBinomiale(0,3,0.25)+loiBinomiale(1,3,0.25)+loiBinomiale(2,3,0.25)+loiBinomiale(3,3,0.25))
+
+
+/* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK 
+loi binomiale */
+function indiceDeck(probaDeck){
+    const t = Math.random()
+    let sumProba = 0.25
     let eventPositionInArray = 0
-    let p = probaDeck //tableau de 4 valeurs entre 0 et 1
-    for (let i = 0; i < p.length; i++) { // boucle de 4 tours
-        if (sumProba <= t) { //tant que la somme des probas est inférieure à t
-            sumProba += p[i] //On ajoute a sumproba la proba à la place i
-            eventPositionInArray++ //on avance d'une case dans le tableau    
+    let p = probaDeck
+    for (let i=1; i< p.length ; i++){
+        if ( sumProba <= t){
+            sumProba += p[i]
+            eventPositionInArray ++              
         }
     }
-    if (eventPositionInArray == p.length) //on renvoie le deck à la place calculée au dessus
-        return eventPositionInArray - 1
-    else {
+    if (eventPositionInArray === p.length)
+        return eventPositionInArray-1
+    else{
         return eventPositionInArray
     }
 }
@@ -99,18 +101,18 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function maj_nb_cartes() {
-    let alea_nb_cartes = 0;
-    if (niveau == "facile") {
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 8 + alea_nb_cartes;
-    } else if (niveau == "moyen") {
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 9 + alea_nb_cartes;
-    } else if (niveau == "difficile") {
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 10 + alea_nb_cartes;
+function maj_nb_cartes(){
+   if (niveau == "facile"){
+        nb_cartes = simulationPoisson(8);
+    } else if (niveau == "moyen"){
+        nb_cartes = simulationPoisson(9);
+    } else if (niveau == "difficile"){
+        nb_cartes = simulationPoisson(10);
     }
+    if(nb_cartes<8)
+        nb_cartes = 8
+    if(nb_cartes>12)
+        nb_cartes = 12
     console.log("nb cartes : " + nb_cartes);
     lancer_jeu();
 }
@@ -153,15 +155,23 @@ function lancer_jeu() {
     def_temps_jeu();
 }
 
-function def_temps_jeu() {
-    if (niveau == "facile") {
-        temps_jeu = 75 + getRandomInt(60); //Entre 75 et 120 sec
-    } else if (niveau == "moyen") {
-        temps_jeu = 60 + getRandomInt(45); //Entre 60 et 105 sec
-    } else if (niveau == "difficile") {
-        temps_jeu = 50 + getRandomInt(55); //Entre 50 et 105 sec
+
+
+
+
+
+/* ALEATOIRE A CHANGER ICI */
+/* DEFINITION DU TEMPS LIMITE */
+function def_temps_jeu(){
+    if (niveau == "facile"){
+        temps_jeu = loiUniforme(75,120); //Entre 75 et 120 sec
+    } else if (niveau == "moyen"){
+        temps_jeu = loiUniforme(60,105);  //Entre 60 et 105 sec
+    } else if (niveau == "difficile"){
+        temps_jeu = loiUniforme(50,105); ; //Entre 50 et 105 sec
     }
-    console.log("Temps jeu 1 : " + temps_jeu);
+    temps_jeu = Math.round(temps_jeu)
+    console.log("Temps jeu 1 : "+temps_jeu);
 }
 
 function lancer_timer() {
