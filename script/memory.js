@@ -26,22 +26,25 @@ let message_perdant_5 = "Dommage, perdu ! ";
 
 let deckChoice = [1,2,3,4];
 
-let probaDeck = [loiBinomiale(0,4,0.25),loiBinomiale(1,4,0.25),loiBinomiale(2,4,0.25),loiBinomiale(3,4,0.25)]
-console.log(loiBinomiale(0,4,0.25)+loiBinomiale(1,4,0.25)+loiBinomiale(2,4,0.25)+loiBinomiale(3,4,0.25))
+let probaDeck = [loiBinomiale(0,3,0.25),loiBinomiale(1,3,0.25),loiBinomiale(2,3,0.25),loiBinomiale(3,3,0.25)]
+console.log(loiBinomiale(0,3,0.25)+loiBinomiale(1,3,0.25)+loiBinomiale(2,3,0.25)+loiBinomiale(3,3,0.25))
 
 /* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK */
 function indiceDeck(probaDeck){
     const t = Math.random();
-    let sumProba = 0
+    console.log('t=' +t)
+    let sumProba = 0.25
     let eventPositionInArray = 0
     let p = probaDeck
-    for (let i=0; i< p.length ; i++){
+    for (let i=1; i< p.length ; i++){
         if ( sumProba <= t){
             sumProba += p[i]
             eventPositionInArray ++              
         }
     }
-    if (eventPositionInArray == p.length)
+    console.log(sumProba)
+
+    if (eventPositionInArray === p.length)
         return eventPositionInArray-1
     else{
         return eventPositionInArray
