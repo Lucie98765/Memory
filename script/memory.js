@@ -26,13 +26,15 @@ let message_perdant_5 = "Dommage, perdu ! ";
 
 let deckChoice = [1,2,3,4];
 
+
 let probaDeck = [loiBinomiale(0,3,0.25),loiBinomiale(1,3,0.25),loiBinomiale(2,3,0.25),loiBinomiale(3,3,0.25)]
 console.log(loiBinomiale(0,3,0.25)+loiBinomiale(1,3,0.25)+loiBinomiale(2,3,0.25)+loiBinomiale(3,3,0.25))
 
-/* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK */
+
+/* VARIABLE ALÉATOIRE QUI DÉFINIT LE DECK 
+loi binomiale */
 function indiceDeck(probaDeck){
-    const t = Math.random();
-    console.log('t=' +t)
+    const t = Math.random()
     let sumProba = 0.25
     let eventPositionInArray = 0
     let p = probaDeck
@@ -42,8 +44,6 @@ function indiceDeck(probaDeck){
             eventPositionInArray ++              
         }
     }
-    console.log(sumProba)
-
     if (eventPositionInArray === p.length)
         return eventPositionInArray-1
     else{
@@ -102,17 +102,17 @@ function getRandomInt(max) {
 }
 
 function maj_nb_cartes(){
-    let alea_nb_cartes = 0;
-    if (niveau == "facile"){
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 8 + alea_nb_cartes;
+   if (niveau == "facile"){
+        nb_cartes = simulationPoisson(8);
     } else if (niveau == "moyen"){
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 9 + alea_nb_cartes;
+        nb_cartes = simulationPoisson(9);
     } else if (niveau == "difficile"){
-        alea_nb_cartes = getRandomInt(3);
-        nb_cartes = 10 + alea_nb_cartes;
-    }  
+        nb_cartes = simulationPoisson(10);
+    }
+    if(nb_cartes<8)
+        nb_cartes = 8
+    if(nb_cartes>12)
+        nb_cartes = 12
     console.log("nb cartes : " + nb_cartes);
     lancer_jeu();
 }
@@ -152,12 +152,13 @@ function lancer_jeu(){
 /* DEFINITION DU TEMPS LIMITE */
 function def_temps_jeu(){
     if (niveau == "facile"){
-        temps_jeu = 75 + getRandomInt(60); //Entre 75 et 120 sec
+        temps_jeu = loiUniforme(75,120); //Entre 75 et 120 sec
     } else if (niveau == "moyen"){
-        temps_jeu = 60 + getRandomInt(45); //Entre 60 et 105 sec
+        temps_jeu = loiUniforme(60,105);  //Entre 60 et 105 sec
     } else if (niveau == "difficile"){
-        temps_jeu = 50 + getRandomInt(55); //Entre 50 et 105 sec
-    } 
+        temps_jeu = loiUniforme(50,105); ; //Entre 50 et 105 sec
+    }
+    temps_jeu = Math.round(temps_jeu)
     console.log("Temps jeu 1 : "+temps_jeu);
 }
 
