@@ -1,4 +1,3 @@
-
 function loiPoisson(lambda,k){
 	let A = Math.pow(lambda, k);
     let L = Math.exp(-lambda);
@@ -18,3 +17,55 @@ function factorielle(n){
 function coeffBinomial(n,k){
 	return factorielle(n)/(factorielle(k)*factorielle(n-k));
 }
+
+function loiGeometrique(p){
+    //p : probabilité
+    let x = 1;
+    let U = Math.random();
+    while(U>p){
+        x=x+1;
+        U=Math.random(); 
+    }
+    return x 
+}
+
+function loiNonNumerique(messages, deck){
+    //messages : tableau de messages
+    //deck : le deck qui a été choisi
+    const alea = Math.random();
+    console.log("alea message : "+alea)
+    if(deck == 1 && alea <= 0.7){ //Deck 1 
+        return messages[0];
+    } else if (deck == 1 && alea > 0.7 && alea <= 0.8){
+        return messages[1];
+    } else if (deck == 1 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 1 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 2 && alea <= 0.7){ //Deck 2
+        return messages[1];
+    } else if (deck == 2 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 2 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 2 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 3 && alea <= 0.7){ //Deck 3
+        return messages[2];
+    } else if (deck == 3 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 3 && alea > 0.8 && alea <= 0.9){
+        return messages[1];
+    } else if (deck == 3 && alea > 0.9){
+        return messages[3];
+    } else if (deck == 4 && alea <= 0.7){ //Deck 4
+        return messages[3];
+    } else if (deck == 2 && alea > 0.7 && alea <= 0.8){
+        return messages[0];
+    } else if (deck == 2 && alea > 0.8 && alea <= 0.9){
+        return messages[2];
+    } else if (deck == 2 && alea > 0.9){
+        return messages[1];
+    } 
+}
+
