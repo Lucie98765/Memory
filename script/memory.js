@@ -57,13 +57,30 @@ function initialiser(evt) {
 
 function change_deck(evt) {
     console.log("Deck numéro " + evt);
-    let lesCartes = document.querySelectorAll("img");
-    for (let uneCarte of lesCartes) {
-        const previous_src = uneCarte.src;
-        const pos = previous_src.indexOf("u");
-        uneCarte.src = previous_src.substr(0, pos + 1) + evt + previous_src.substr(pos + 2);
+    
+    let lesCartesUn = document.getElementsByClassName("cartes_un_c");
+    for (let uneCarteUn of lesCartesUn) {
+        const previous_src = uneCarteUn.src;
+        let index = previous_src.length - 13;
+        uneCarteUn.src = previous_src.substr(0, index + 1) + evt + previous_src.substr(index + 2);
     }
+    let lesCartesDeux = document.getElementsByClassName("cartes_deux_c");
+    for (let uneCarteDeux of lesCartesDeux) {
+        const previous_src = uneCarteDeux.src;
+        let index = previous_src.length - 14;
+        uneCarteDeux.src = previous_src.substr(0, index + 1) + evt + previous_src.substr(index + 2);
+    }
+    let lesCartesDos = document.getElementsByClassName("cartes_dos");
+    for (let uneCarteDos of lesCartesDos) {
+        const previous_src = uneCarteDos.src;
+        let index = previous_src.length - 10;
+        uneCarteDos.src = previous_src.substr(0, index + 1) + evt + previous_src.substr(index + 2);
+    }
+    let src_info = document.getElementById("img_info").src;
+    document.getElementById("img_info").src = src_info.substr(0, src_info.length - 10 + 1) + evt + src_info.substr(src_info.length - 10 + 2);
+    
     deckFinal = evt;
+    
     const span = document.getElementById("theme");
     if(evt == 1){
         span.innerHTML = "loup-garou";
