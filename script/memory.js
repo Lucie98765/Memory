@@ -71,17 +71,25 @@ function change_deck(evt) {
 function init_jeu() {
     const section_niveau = document.getElementById("section_niveau");
     const section_jeu = document.getElementById("section_jeu");
+    const section_info = document.getElementById("info");
+    console.log(section_info)
     section_jeu.style.display = "none";
+    section_info.style.display = "none";
     document.getElementById("niveau_facile").addEventListener("click", () => {
         def_niveau("facile")
+        section_info.style.display = "block";
+
     });
 
     document.getElementById("niveau_moyen").addEventListener("click", () => {
         def_niveau("moyen")
+        section_info.style.display = "block";
+
     });
 
     document.getElementById("niveau_difficile").addEventListener("click", () => {
         def_niveau("difficile")
+        section_info.style.display = "block";
     });
 }
 
@@ -192,7 +200,6 @@ function lancer_timer() {
     }, 1000);
 
 }
-
 
 function retournerCarte(evt) {
     let uneCarte = this;

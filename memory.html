@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>JEU DU MEMORY</title>
     <link rel="stylesheet" type="text/css" href="css/memory.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Athiti:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"> 
     <script type="text/javascript" src="script/maths.js"></script>
     <script type="text/javascript" src="script/memory.js"></script>
 </head>
@@ -17,6 +18,17 @@
             <input type="button" value="Facile" id="niveau_facile">
             <input type="button" value="Moyen" id="niveau_moyen">
             <input type="button" value="Difficile" id="niveau_difficile">
+        </section>
+        <section id ="info">
+            <img src="images/jeu4/dos.png" alt="dos de la carte" id="img_info" />
+            <p>Thème :<span id="theme"></span></p>
+            <p>Niveau :<span id="niveau"></span></p>
+            <div id="info_paires">
+                <p>Nombres de paires :<span id="nb_paires"></span></p>
+                <p>Paires trouvées :<span id="trouvees"></span></p>
+                <p>Paires restantes :<span id="restantes"></span></p>
+            </div>
+            <p>Temps restant : <span id="timer"></span> s</p>
         </section>
         <section id="section_jeu">
             <section id="jeu">
@@ -120,10 +132,7 @@
                     </div>
                 </div>
             </section>
-            <section id="section_timer">
-                <p>Temps restant : <span id="timer"></span> s</p>
-            </section>
-            <section>
+            <section id="section_decouverte">
                 <h2> Les paires découvertes</h2>
                 <div id="cartesDecouvertes">
                 </div>
