@@ -1,16 +1,57 @@
-
+body{
+    overflow-y: scroll;
+}
+header{
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
 h1 {
     text-align: center;
     font-family: 'Athiti', sans-serif;
 }
 main {
     display:flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap:wrap;
+    font-family: 'Athiti', sans-serif;
 }
 section {
     width:750px;
+    margin-left: 1vw;
+    margin-right: 1vw;
 }
+/* Section sélection niveau */
+#section_niveau{
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    margin-top: 10vh;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-weight: bold;
+    justify-content: space-around;
+}
+#section_niveau p{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+#section_niveau input{
+    padding:6px 0 6px 0;
+    background:#f5f5f5;
+	color:#555;
+	border-radius:2px;
+	width:100px;
+	border:1px solid #ccc;
+	box-shadow:1px 1px 3px #999;
+}
+#section_niveau input:hover{
+    cursor: pointer;
+}
+
+/* Sections de jeu et info */
 #jeu,#section_decouverte{
     border-width: 2px;
     border-radius: 6px;
@@ -20,14 +61,13 @@ section {
     padding: 10px;
     padding-left: 40px;
     padding-bottom: 40px;
-    font-family: 'Athiti', sans-serif;
 }
 #info{
     border-width: 2px;
     border-radius: 6px;
     border-style: solid;
     border-color: grey;
-    height: 320px;
+    height: 375px;
     width: 230px;
     padding: 10px;
     text-align: center;
@@ -39,6 +79,10 @@ section {
     width: 750px;
     display: flex;
     flex-wrap: wrap;
+}
+#section_jeu{
+    width: auto;
+    margin-top: -10px;
 }
 /*Retournement des cartes : principe du flip  */
 .flip {
@@ -72,6 +116,7 @@ section {
  .flip.face { /*on a remplacé :hover par .face*/
      transform:rotateX(180deg);
 } 
+
 /* Partie pour rejouer */ 
 /* bouton recommencer */
 #divRejouer {
@@ -87,47 +132,14 @@ section {
 	display:none;
 }
 #btnRecommencer {
-    width:400px;
-    height:300px;
-    font-size:36px;
+    padding:10px;
+    background:#f5f5f5;
+	color:#555;
+	border-radius:2px;
+	border:1px solid #ccc;
+	box-shadow:1px 1px 3px #999;
+    font-size: 20px;
 }
-/*.myButton {
-	-moz-box-shadow: 3px 4px 0px 0px #899599;
-	-webkit-box-shadow: 3px 4px 0px 0px #899599;
-	box-shadow: 3px 4px 0px 0px #899599;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
-	background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-	background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-	background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-	background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
-	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
-	background-color:#ededed;
-	-moz-border-radius:15px;
-	-webkit-border-radius:15px;
-	border-radius:15px;
-	border:1px solid #d6bcd6;
-	display:inline-block;
-	cursor:pointer;
-	color:#3a8a9e;
-	font-family:arial;
-	font-size:17px;
-	padding:7px 12px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #e1e2ed;
-    outline:none;
+#btnRecommencer:hover{
+    cursor: pointer;
 }
-.myButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
-	background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-	background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-	background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-	background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
-	background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
-	background-color:#bab1ba;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}*/

@@ -64,6 +64,16 @@ function change_deck(evt) {
         uneCarte.src = previous_src.substr(0, pos + 1) + evt + previous_src.substr(pos + 2);
     }
     deckFinal = evt;
+    const span = document.getElementById("theme");
+    if(evt == 1){
+        span.innerHTML = "loup-garou";
+    } else if (evt == 2){
+        span.innerHTML = "fleurs";
+    } else if (evt == 3){
+        span.innerHTML = "astrologie";
+    } else if (evt == 4){
+        span.innerHTML = "oeuvres d'art";
+    }
 }
 
 
@@ -78,7 +88,6 @@ function init_jeu() {
     document.getElementById("niveau_facile").addEventListener("click", () => {
         def_niveau("facile")
         section_info.style.display = "block";
-
     });
 
     document.getElementById("niveau_moyen").addEventListener("click", () => {
@@ -98,13 +107,14 @@ function def_niveau(evt) {
     section_niveau.style.display = "none";
     section_jeu.style.display = "block";
     maj_nb_cartes();
+    const span = document.getElementById("niveau");
+    span.innerHTML = niveau;
 }
 
 
 
-
-/* ALEATOIRE A CHANGER ICI */
-/* DETERMINE LE NOMBRE DE CARTES */
+/* VARIABLE ALEATOIRE QUI DETERMINE LE NOMBRE DE CARTES 
+Loi de Poisson */
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -121,32 +131,36 @@ function maj_nb_cartes(){
         nb_cartes = 8
     if(nb_cartes>12)
         nb_cartes = 12
-    console.log("nb cartes : " + nb_cartes);
+    console.log("nb paires : " + nb_cartes);
     lancer_jeu();
+    const span = document.getElementById("nb_paires");
+    span.innerHTML = nb_cartes;
+    document.getElementById("trouvees").innerHTML = "0";
+    document.getElementById("restantes").innerHTML = nb_cartes;
 }
 
 function lancer_jeu() {
+    //Supression des cartes en trop
     const a_suppr = (2 * (12 - nb_cartes));
-    console.log("a suppr : " + a_suppr);
     for (let i = 0; i < 2 * a_suppr; i++) {
         let section = document.getElementById("jeuCartes");
-        //console.log(section.lastChild);
         section.removeChild(section.lastChild);
     }
-    let lesCartes = document.getElementsByClassName("flip");
-    let taille = lesCartes.length;
-    console.log("taille : " + taille);
-    //On cree un tableau avec autant de cases qu'il y a de cartes et dont chaque case contient la probablité d'être tirée
-    let probaPlacement = [];
+    
+    /* VARIABLE ALEATOIRE POUR MELANGER LES CARTES 
+    Loi Geometrique */
+    //Préparation du mélange des cartes
+    let lesCartes = document.getElementsByClassName("flip"); //On sélectionnes toutes les cartes
+    let taille = lesCartes.length; //On récupère le nombre de cartes
+    let probaPlacement = []; //On cree un tableau avec autant de cases qu'il y a de cartes
     let sum = 0;
     for (let i = 0; i < taille; i++) {
-        probaPlacement[i] = loiGeometrique((1/taille));
+        probaPlacement[i] = loiGeometrique((1/taille)); //On remplit chaque case d'un nombre aléatoire
     }
     console.log(probaPlacement);
+    //Melange des cartes
     let sum_geom = 0;
     let carte_a_changer = 0
-
-    //Melanger les cartes
     let section = document.getElementById("jeuCartes");
     for (let compteur = null; compteur <= 200; compteur++) {        
         for (let i = 0; i < probaPlacement.length; i++) {
@@ -167,9 +181,8 @@ function lancer_jeu() {
 
 
 
-
-/* ALEATOIRE A CHANGER ICI */
-/* DEFINITION DU TEMPS LIMITE */
+/* DEFINITION DU TEMPS LIMITE 
+Loi Uniforme*/
 function def_temps_jeu(){
     if (niveau == "facile"){
         temps_jeu = loiUniforme(75,120); //Entre 75 et 120 sec
@@ -183,12 +196,13 @@ function def_temps_jeu(){
 }
 
 function lancer_timer() {
-    console.log("Temps jeu 1 : " + temps_jeu);
     let temps_restant = temps_jeu;
     interval1 = setInterval(() => {
         document.getElementById("timer").innerHTML = temps_restant;
         temps_restant--;
         if (temps_restant == 0) {
+            /* VARIABLE ALÉATOIRE GESTION DU MESSAGE DE FIN 
+            loi directe */
             window.removeEventListener("click", stop, true);
             const listeMessages = [message_perdant_1, message_perdant_2, message_perdant_3, message_perdant_4];
             const message = loiNonNumerique(listeMessages, deckFinal);
@@ -216,7 +230,7 @@ function retournerCarte(evt) {
     }
 
     if (carte1 != null && carte2 != null) {
-        window.setTimeout(afficherResultat, 1500);
+        window.setTimeout(afficherResultat, 1000);
         window.addEventListener("click", stop, true);
     }
 }
@@ -249,10 +263,17 @@ function clonerCartes(evt) {
     carte2clonee.style.opacity = "1";
     carte1 = null;
     carte2 = null;
+    const span_trouvees = document.getElementById("trouvees");
+    const span_restantes = document.getElementById("restantes");
+    span_trouvees.innerHTML = document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length/2;
+    span_restantes.innerHTML = nb_cartes - (document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length/2);
+    
     window.removeEventListener("click", stop, true);
     if (document.getElementById("cartesDecouvertes").getElementsByClassName("flip").length == nb_cartes * 2) {
         clearInterval(interval1);
         window.removeEventListener("click", stop, true); 
+        /* VARIABLE ALÉATOIRE GESTION DU MESSAGE DE FIN 
+        loi directe */
         const listeMessages = [message_gagnant_1, message_gagnant_2, message_gagnant_3, message_gagnant_4];
         const message = loiNonNumerique(listeMessages, deckFinal);
         window.alert(message);
